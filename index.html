@@ -27,6 +27,7 @@
       });
 
       var runQuery = function() {
+        var graphObject = MP.Data.inst();
         for (i = 30; i >= 0; i--) {
           var eventName = eventSelect.MPEventSelect('value'),
               propName  = propSelect.MPPropertySelect('value'),
@@ -45,8 +46,10 @@
           if (eventName) {
             MP.api.segment(eventName, propName, params).done(function(results) {
               console.log(results.values());
-              eventGraph.MPChart('setData', results);
-              eventTable.MPTable('setData', results);
+              graphObject.combine(graphObject.values(), results.values());
+              // eventGraph.MPChart('setData', graphObject);
+              // eventTable.MPTable('setData', graphObject);
+              console.log(graphObject.values())
             });
           }
         }
