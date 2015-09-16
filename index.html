@@ -17,6 +17,7 @@
     </div>
     <div id="table"></div>
     <script>
+      var graphArray = [];
       var eventSelect = $('#eventSelect').MPEventSelect();
       var propSelect  = $('#propSelect').MPPropertySelect();
       // var dateSelect  = $('#dateSelect').MPDatepicker();
@@ -27,7 +28,6 @@
       });
 
       var runQuery = function() {
-        graphArray = [];
         for (i = 30; i >= 0; i--) {
           var eventName = eventSelect.MPEventSelect('value'),
               propName  = propSelect.MPPropertySelect('value'),
@@ -50,10 +50,16 @@
             });
           }
         }
-        graphObject = MP.Data.inst(graphArray);
+        displayData();
+      };
+      
+      var displayData = function() {
+        graphObject = MP.Data.inst([graphArray[0],graphArray[1],graphArray[2]]);
+        console.log(graphObject.values());
         eventGraph.MPChart('setData', graphObject);
         eventTable.MPTable('setData', graphObject);
-      };
+      }
+      
       eventSelect.on('change', function(e, eventName) {
         propSelect.MPPropertySelect('setEvent', eventName);
         $("#by").show();
