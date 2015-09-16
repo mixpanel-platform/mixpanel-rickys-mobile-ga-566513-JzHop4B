@@ -35,7 +35,7 @@
               dateTimeOffset = i * 86400,
               selector = 'datetime(properties["Last Level Completed"]) >= datetime(' + (currentTimestamp - (dateTimeOffset + 86400)) + ') and datetime(properties["Last Level Completed"]) < datetime(' + (currentTimestamp - dateTimeOffset) + ')',
               params = {
-              from: moment().subtract(i+1, 'days').startOf('day'),
+              from: moment().subtract(i, 'days').startOf('day'),
               to: moment().subtract(i, 'days').startOf('day'),
               type: 'average',
               unit: 'day',
@@ -44,14 +44,12 @@
   
           if (eventName) {
             MP.api.segment(eventName, propName, params).done(function(results) {
-              console.log(dateTimeOffset);
               console.log(results.values());
               eventGraph.MPChart('setData', results);
               eventTable.MPTable('setData', results);
             });
           }
         }
-        console.log(currentTimestamp);
       };
       eventSelect.on('change', function(e, eventName) {
         propSelect.MPPropertySelect('setEvent', eventName);
