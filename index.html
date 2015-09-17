@@ -56,7 +56,7 @@
       };
       
       var displayData = function() {
-        mpGraph = MP.Data.inst(graphObject);
+        mpGraph = MP.Data.inst({"App Open": graphObject});
         console.log(mpGraph.values());
         eventGraph.MPChart('setData', mpGraph);
         eventTable.MPTable('setData', mpGraph);
