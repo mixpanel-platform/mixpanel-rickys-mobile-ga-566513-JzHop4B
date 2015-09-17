@@ -18,6 +18,7 @@
     <div id="table"></div>
     <script>
       var graphObject = {};
+      var mpGraph;
       var eventSelect = $('#eventSelect').MPEventSelect();
       var propSelect  = $('#propSelect').MPPropertySelect();
       // var dateSelect  = $('#dateSelect').MPDatepicker();
@@ -45,17 +46,20 @@
   
           if (eventName) {
             MP.api.segment(eventName, propName, params).done(function(results) {
-              console.log(results.values());
-              $.extend(graphObject, results.values());
-              console.log(graphObject);
+              var stringResults = results.values();
+              // console.log(stringResults[eventName]);
+              $.extend(graphObject, stringResults[eventName]);
+              // console.log(graphObject);
             });
           }
         }
       };
       
       var displayData = function() {
-        eventGraph.MPChart('setData', graphObject);
-        eventTable.MPTable('setData', graphObject);
+        mpGraph = MP.Data.inst(graphObject);
+        console.log(mpGraph.values());
+        eventGraph.MPChart('setData', mpGraph);
+        eventTable.MPTable('setData', mpGraph);
       }
       
       eventSelect.on('change', function(e, eventName) {
@@ -63,7 +67,7 @@
         $("#by").show();
         runQuery();
       });
-      propSelect.on('change', runQuery);
+      propSelect.on('change', displayData);
       // dateSelect.on('change', runQuery);
     </script>
   </body>
