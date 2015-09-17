@@ -45,12 +45,13 @@
   
           if (eventName) {
             MP.api.segment(eventName, propName, params).done(function(results) {
-              $.extend(graphObject, results.values());
+              $.extend(graphObject, results);
               console.log(graphObject);
             });
           }
         }
         displayData();
+        console.log("data displayed");
       };
       
       var displayData = function() {
