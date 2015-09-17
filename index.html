@@ -17,7 +17,7 @@
     </div>
     <div id="table"></div>
     <script>
-      var graphArray = [];
+      var graphObject = {};
       var eventSelect = $('#eventSelect').MPEventSelect();
       var propSelect  = $('#propSelect').MPPropertySelect();
       // var dateSelect  = $('#dateSelect').MPDatepicker();
@@ -45,8 +45,8 @@
   
           if (eventName) {
             MP.api.segment(eventName, propName, params).done(function(results) {
-              graphArray.push(results.values());
-              console.log(graphArray);
+              $.extend(graphObject, results.values());
+              console.log(graphObject);
             });
           }
         }
@@ -54,8 +54,6 @@
       };
       
       var displayData = function() {
-        graphObject = MP.Data.inst([graphArray[0],graphArray[1],graphArray[2]]);
-        console.log(graphObject.values());
         eventGraph.MPChart('setData', graphObject);
         eventTable.MPTable('setData', graphObject);
       }
